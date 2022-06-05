@@ -9,6 +9,7 @@ Zad1 -> An experiment with doing sys calls for running linux commands in C.
 Zad2 -> A look at how we can create a program with a list of executable programms and run them upon selection.
 
 **The next set of programms is all about concurrent computing and exploring ways we solve famous problems when running multiple things at once**
+
 Zad3 -> Playing around with the famous Dekker's algorithm, making 2 threads and making them enter the same critical section
 Zad4 -> Solving the readers/writers problem using a concept called Semaphores
 Zad5 -> This is just experimenting with different ways to solve the "Dining philosophers problem", basically - what happens when we try to run multiple (5 in this example) threads at the same time.
