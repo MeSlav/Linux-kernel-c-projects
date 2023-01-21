@@ -17,7 +17,7 @@ Zad5_monitor -> solving Zad5 problem using a concept called monitors<br />
 
 **RUNNING THE PROGRAMMS**<br />
 * To generate an exe file from any of the c programms, open linux terminal in the same folder where you cloned your project and run:<br />
-  gcc -o the_name_of_the_executable_programm file_name.c<br />
+  `gcc -o the_name_of_the_executable_programm file_name.c`<br />
   the_name_of_the_executable_programm --> can be any name you like<br />
 * To run the generated executable, in the same terminal type:<br />
-  ./the_name_of_the_executable_programm<br />
+  `./the_name_of_the_executable_programm`<br />
