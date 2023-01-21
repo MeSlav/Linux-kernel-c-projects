@@ -24,12 +24,12 @@ int philosopherStates[PHILOSOPHER_COUNT];
 int philosopherIndexes[] = {0, 1, 2, 3, 4};
 
 void initializeState(){
-	//initialize philosopher states
+	// initialize philosopher states
 	for(int i=0; i<PHILOSOPHER_COUNT; i++) {
 		philosopherStates[i] = THINKING;
 	}
 
-	//initialize state for forks
+	// initialize state for forks
 	for(int i=0; i<PHILOSOPHER_COUNT; i++) {
 		forks[i] = FORK_FREE;
 	}
@@ -37,10 +37,10 @@ void initializeState(){
 
 void printState(){
 	pthread_mutex_lock(&printMutex);
-	//clear screen every time new state is printed
+	// clear screen every time new state is printed
 	system("@cls||clear");
 
-	//print state
+	// print state
 	printf("Philosopher states:\n");
 	for(int i=0; i<PHILOSOPHER_COUNT; i++){
 		printf("Philosopher %d, state: ", i+1);
@@ -57,6 +57,7 @@ void printState(){
 				break;
 		}
 	}
+
 	pthread_mutex_unlock(&printMutex);
 }
 
@@ -67,41 +68,41 @@ void think(int philosopherIndex){
 }
 
 void startEating(int philosopherIndex){
-    //enter critical section
-    pthread_mutex_lock(&monitor);
+  // enter critical section
+  pthread_mutex_lock(&monitor);
 
-    philosopherStates[philosopherIndex] = WAITING;
-    while(forks[philosopherIndex]==FORK_TAKEN || forks[(philosopherIndex+1)%PHILOSOPHER_COUNT]==FORK_TAKEN){
-        pthread_cond_wait(&condition, &monitor);
-    }
+  philosopherStates[philosopherIndex] = WAITING;
+  while(forks[philosopherIndex]==FORK_TAKEN || forks[(philosopherIndex+1)%PHILOSOPHER_COUNT]==FORK_TAKEN){
+    pthread_cond_wait(&condition, &monitor);
+  }
 
-    forks[philosopherIndex] = FORK_TAKEN;
-    forks[(philosopherIndex+1)%PHILOSOPHER_COUNT] = FORK_TAKEN;
-    philosopherStates[philosopherIndex] = EATING;
-    printState();
+  forks[philosopherIndex] = FORK_TAKEN;
+  forks[(philosopherIndex+1)%PHILOSOPHER_COUNT] = FORK_TAKEN;
+  philosopherStates[philosopherIndex] = EATING;
+  printState();
 
-    //exit critical section
-    pthread_mutex_unlock(&monitor);
+  // exit critical section
+  pthread_mutex_unlock(&monitor);
 }
 
 void stopEating(int philosopherIndex){
-    //enter critical section
-    pthread_mutex_lock(&monitor);
+  // enter critical section
+  pthread_mutex_lock(&monitor);
 
-    forks[philosopherIndex] = FORK_FREE;
-    forks[(philosopherIndex+1)%PHILOSOPHER_COUNT] = FORK_FREE;
-    philosopherStates[philosopherIndex] = THINKING;
+  forks[philosopherIndex] = FORK_FREE;
+  forks[(philosopherIndex+1)%PHILOSOPHER_COUNT] = FORK_FREE;
+  philosopherStates[philosopherIndex] = THINKING;
 	pthread_cond_broadcast(&condition);
-    printState();
+  printState();
 
-    //exit critical section
-    pthread_mutex_unlock(&monitor);
+  // exit critical section
+  pthread_mutex_unlock(&monitor);
 }
 
 void eat(int philosopherIndex){
-    startEating(philosopherIndex);
+  startEating(philosopherIndex);
 	sleep(2);
-    stopEating(philosopherIndex);
+  stopEating(philosopherIndex);
 }
 
 void* philosopher(void* index){
